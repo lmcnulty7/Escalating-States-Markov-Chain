@@ -5,9 +5,10 @@
 - Scanned **every blob in the full git history** for credentials
   (password, ACLED/UCDP tokens, JWTs, private keys, GH/AWS/Slack tokens):
   **clean**. No `.env`, no token file, no data, no `.claude/` on the remote.
-- Found: **author email is embedded in all commits** (git identity) — public
-  via GitHub. Fixable with a GitHub `noreply` address + history rewrite;
-  pending owner decision.
+- Found and **fixed**: the author's personal email was embedded in all commits
+  (git identity, public via GitHub). History rewritten to
+  `lmcnulty7@users.noreply.github.com` and force-pushed; repo-local
+  `user.email` set to the same so future commits stay private.
 - Removed the macOS home path from DEVLOG (revealed local username).
 - Added README **"Limitations & responsible use"**: media-coverage bias
   (underreported crises look calm), the 12-month violence lag, modest skill,
