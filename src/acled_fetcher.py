@@ -141,6 +141,30 @@ def accessible_end() -> pd.Timestamp:
     return _embargo_end or (pd.Timestamp.now().normalize() - pd.DateOffset(months=12))
 
 
+def access_date(country: str | None = None) -> pd.Timestamp | None:
+    """
+    When this machine last downloaded ACLED data — required by ACLED's
+    attribution policy ("include when you accessed the data").
+    Per-country cache mtime, or the newest across all countries.
+    """
+    paths = [_cache_path(country)] if country else list(ACLED_CACHE_DIR.glob("*.parquet"))
+    stamps = [pd.Timestamp(p.stat().st_mtime, unit="s") for p in paths if p.exists()]
+    return max(stamps).normalize() if stamps else None
+
+
+# ACLED attribution policy: cite source, access date, filters, and manipulation
+ATTRIBUTION_SHORT = "Data: ACLED (acleddata.com)"
+
+
+def attribution(country: str | None = None) -> str:
+    """One-line ACLED citation for display on visuals and in reports."""
+    acc = access_date(country)
+    when = f", accessed {acc:%Y-%m-%d}" if acc is not None else ""
+    scope = f" — {country}" if country else " — 14 MENA countries"
+    return (f"{ATTRIBUTION_SHORT}{when}{scope}, all event types; "
+            "aggregated by author to Monday-start weekly totals")
+
+
 # ── Public fetch ──────────────────────────────────────────────────────────────
 
 def fetch_acled(country: str, start_date: str, end_date: str) -> pd.DataFrame:

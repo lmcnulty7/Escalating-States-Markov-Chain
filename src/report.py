@@ -75,7 +75,16 @@ def _violence_section(cdf: pd.DataFrame, country: str, acled_events: pd.DataFram
     cur = avail.iloc[-1]
     as_of = cur["date"]
     n_ev = int(cur.get("acled_events", 0))
-    cite_base = f"ACLED, week of {as_of:%Y-%m-%d}, {n_ev} event records"
+    # ACLED attribution policy: source, access date, filters, manipulation
+    try:
+        from src.acled_fetcher import access_date
+        acc = access_date(country)
+        acc_txt = f", accessed {acc:%Y-%m-%d}" if acc is not None else ""
+    except Exception:
+        acc_txt = ""
+    cite_base = (f"ACLED (Armed Conflict Location & Event Data), acleddata.com{acc_txt} — "
+                 f"{country}, week of {as_of:%Y-%m-%d}, all event types, "
+                 f"{n_ev} event records summed to weekly totals by author")
 
     out.append(_s("measure",
                   f"ACLED recorded **{int(cur['acled_fatalities'])} fatalities** across "

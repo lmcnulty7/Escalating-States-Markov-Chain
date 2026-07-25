@@ -1,5 +1,22 @@
 # DEVLOG
 
+## 2026-07-18 — ACLED attribution compliance (repo is public)
+
+- Checked ACLED's actual Attribution Policy — it requires more than a README
+  link: citations must state **when the data was accessed, which filters were
+  used, and how it was manipulated**, and visualizations must carry the
+  citation **on the visual itself** (bottom or legend).
+- Added `acled_fetcher.access_date()` (per-country cache mtime) and
+  `attribution()` → one-line compliant citation.
+- Citation annotation now renders on all three ACLED-derived charts
+  (intensity overlay, weekly fatalities, event-type breakdown).
+- Report citations expanded to the full form; footer now names ACLED and
+  GDELT with links + the "ACLED bears no responsibility" disclaimer.
+- README: full attribution section (filters + manipulation documented).
+- GDELT confirmed unrestricted-use with citation + link — already satisfied.
+- **No code license** (user's decision): all rights reserved, repo published
+  for reading/review only. Stated in README.
+
 ## 2026-07-18 — Published to GitHub
 
 - Repo: https://github.com/lmcnulty7/Escalating-States-Markov-Chain

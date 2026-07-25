@@ -111,10 +111,28 @@ Phases 1–2 complete: violence + media report sections, calibrated outlook with
 purged evaluation. Next: humanitarian indicators (UNHCR/IPC), admin1 geographic
 detail, and economic consequences.
 
-## Data licensing
+## Data attribution & licensing
 
-Raw data is not redistributed in this repository. ACLED data is subject to
-[ACLED's terms of use](https://acleddata.com/terms-of-use/) and requires
-attribution; GDELT is used under its
-[open license](https://www.gdeltproject.org/about.html#termsofuse). Rebuild all
-data locally with the setup commands above.
+**No raw data is redistributed in this repository.** Rebuild it locally with the
+setup commands above, using your own credentials.
+
+**ACLED** — Armed Conflict Location & Event Data ([acleddata.com](https://acleddata.com)).
+Used under [ACLED's Terms of Use](https://acleddata.com/terms-of-use/) and
+[Attribution Policy](https://acleddata.com/attributionpolicy). Data are filtered to
+14 MENA countries, all event types, and aggregated by the author into Monday-start
+weekly totals (fatalities, event counts by type, distinct admin-1 regions, distinct
+first-seen actors). The access date is recorded from the local cache and displayed
+on every visualization and report citation produced by this project.
+*ACLED bears no responsibility for the analysis or conclusions presented here.*
+
+**The GDELT Project** ([gdeltproject.org](https://www.gdeltproject.org/)) — daily
+event files and the DOC API, used under GDELT's open terms (unrestricted use with
+citation and a link to the project).
+
+**UCDP GED** ([ucdp.uu.se](https://ucdp.uu.se/)) — optional fallback ground truth.
+**VADER** sentiment (MIT) for RSS headline scoring.
+
+### Code license
+
+None. All rights reserved by the author — this repository is published for reading
+and review, not for reuse.

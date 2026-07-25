@@ -198,6 +198,16 @@ with st.sidebar:
 
 # ── Tabs ──────────────────────────────────────────────────────────────────────
 
+# ACLED's attribution policy requires the citation to appear ON any visual
+# built from their data, stating access date, filters, and manipulation.
+from src.acled_fetcher import attribution as _acled_attribution
+
+ACLED_CITE = _acled_attribution(selected)
+ACLED_ANNOTATION = dict(
+    text=ACLED_CITE, xref="paper", yref="paper", x=0, y=-0.28,
+    showarrow=False, font=dict(size=10, color="#8a8a8a"), xanchor="left",
+)
+
 tab1, tab2, tab3, tab4, tab5 = st.tabs(
     ["🗺️ MENA Overview", "📊 Country Analysis", "🔮 Forecast", "📰 Live News", "📋 Report"]
 )
@@ -677,6 +687,7 @@ the entire dataset — meaning **100% = the single most conflict-intensive count
         fig_ts.update_layout(
             yaxis2=dict(overlaying="y", side="right", title="Fatalities/week",
                         showgrid=False, rangemode="tozero"),
+            annotations=[ACLED_ANNOTATION],   # ACLED attribution on the visual
         )
     # Posterior confidence bands if available
     if "hmm_prob_active_conflict" in cdf.columns:
@@ -689,9 +700,9 @@ the entire dataset — meaning **100% = the single most conflict-intensive count
     fig_ts.update_layout(
         xaxis_title="Week", yaxis_title="Score [0–1]",
         yaxis=dict(range=[0, 1.05]),
-        height=380,
+        height=410,
         legend=dict(orientation="h", yanchor="bottom", y=1.02),
-        margin=dict(t=50, b=40),
+        margin=dict(t=50, b=76),   # room for the ACLED citation annotation
     )
     st.plotly_chart(fig_ts, use_container_width=True)
 
@@ -720,6 +731,7 @@ the entire dataset — meaning **100% = the single most conflict-intensive count
     # ── Observed violence — ACLED (draft Step 6: two charts, no redesign) ───
     if "acled_fatalities" in cdf.columns and cdf["acled_fatalities"].notna().any():
         st.subheader("Observed Violence — ACLED")
+        _cite_annotation = ACLED_ANNOTATION
         acled_last = cdf.loc[cdf["acled_fatalities"].notna(), "date"].max()
         st.caption(
             f"Recorded conflict events (ACLED). Coverage ends **{acled_last:%b %d, %Y}** — "
@@ -739,8 +751,9 @@ the entire dataset — meaning **100% = the single most conflict-intensive count
                               line_width=0, annotation_text="embargo — no data",
                               annotation_position="top left")
         fig_fat.update_layout(
-            title="Weekly fatalities", height=240, showlegend=False, bargap=0.25,
-            yaxis_title="Deaths / week", margin=dict(t=40, b=30, l=10, r=10),
+            title="Weekly fatalities", height=270, showlegend=False, bargap=0.25,
+            yaxis_title="Deaths / week", margin=dict(t=40, b=64, l=10, r=10),
+            annotations=[_cite_annotation],
         )
         st.plotly_chart(fig_fat, use_container_width=True)
 
@@ -764,10 +777,11 @@ the entire dataset — meaning **100% = the single most conflict-intensive count
             fig_types.add_vrect(x0=emb0, x1=emb1, fillcolor="#888888",
                                 opacity=0.15, line_width=0)
         fig_types.update_layout(
-            barmode="stack", title="Weekly events by type", height=300,
+            barmode="stack", title="Weekly events by type", height=330,
             bargap=0.25, yaxis_title="Events / week",
             legend=dict(orientation="h", yanchor="bottom", y=1.02, x=0),
-            margin=dict(t=70, b=30, l=10, r=10),
+            margin=dict(t=70, b=64, l=10, r=10),
+            annotations=[_cite_annotation],
         )
         st.plotly_chart(fig_types, use_container_width=True)
 
@@ -1052,7 +1066,11 @@ with tab5:
 
 st.divider()
 st.caption(
-    f"Data: GDELT Project · RSS (BBC, Al Jazeera, NYT) · as of {data_as_of}.  "
-    "Model: GaussianHMM (forward-backward posteriors) + XGBoost (SHAP explanations).  "
-    "States are inferred latent variables, not ground-truth conflict classifications."
+    f"Data: **ACLED** (Armed Conflict Location & Event Data, "
+    f"[acleddata.com](https://acleddata.com)) · **The GDELT Project** "
+    f"([gdeltproject.org](https://www.gdeltproject.org/)) · RSS (BBC, Al Jazeera, NYT) "
+    f"· as of {data_as_of}.  \n"
+    f"{ACLED_CITE}. ACLED bears no responsibility for the analysis presented here.  \n"
+    "Model: GaussianHMM (forward-backward posteriors) + XGBoost, Platt-calibrated.  "
+    "HMM states are inferred latent variables, not ground-truth conflict classifications."
 )
