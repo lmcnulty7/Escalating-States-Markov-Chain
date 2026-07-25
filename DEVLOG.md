@@ -1,5 +1,22 @@
 # DEVLOG
 
+## 2026-07-18 — Published to GitHub
+
+- Repo: https://github.com/lmcnulty7/Escalating-States-Markov-Chain
+- **Made this a standalone git repo.** The directory was previously owned by
+  the home-directory repo (`/Users/lucienmcnulty`) — committing from there
+  would have pushed the entire home folder (SSH keys, .claude.json, etc.).
+  Same pattern as NBA Comp Viz V3.
+- Excluded and verified absent from the remote: `.env` (ACLED password),
+  `.acled_token.json`, `data/` (41 MB GDELT archive + 12 MB ACLED raw records
+  — also an ACLED redistribution-terms issue), `models/`, and `.claude/`
+  (its worktrees held copies of unrelated projects).
+- Added README (architecture, honest metrics, setup, data licensing) and
+  `.env.example`; added scipy to requirements (report.py uses it).
+- Removed stale `src/data_fetcher 2.py` — a July 16 macOS duplicate predating
+  the circuit breaker and env-tunable delay; unreferenced.
+- Local data and credentials untouched — nothing needs re-fetching.
+
 ## 2026-07-18 — Phase 2: purged walk-forward + calibration
 
 - **Purged walk-forward evaluation** (`walk_forward_escalation`): expanding
