@@ -111,6 +111,39 @@ Phases 1–2 complete: violence + media report sections, calibrated outlook with
 purged evaluation. Next: humanitarian indicators (UNHCR/IPC), admin1 geographic
 detail, and economic consequences.
 
+## Limitations & responsible use
+
+This is a **research and portfolio project**, not an operational early-warning
+system. It should not be used for humanitarian, security, policy, or operational
+decisions without independent validation. Its outputs describe patterns in
+*reported* data — they are not ground truth about violence.
+
+Known limitations, stated because they change what the numbers mean:
+
+- **Media coverage is biased.** GDELT measures global (largely English-language)
+  media attention. Countries and crises that receive less international coverage
+  register as quieter regardless of what is happening on the ground, so
+  underreported conflicts are systematically under-weighted. A media-vs-recorded-
+  violence divergence indicator is planned to surface exactly this failure mode.
+- **Violence data lags by ~12 months.** ACLED's free tier embargoes recent
+  events, so violence sections describe the past while media sections describe
+  the present. Reports label this explicitly; *absence of data is never evidence
+  of calm.*
+- **Predictive skill is modest.** Held-out PR-AUC 0.093 vs 0.067 persistence.
+  Calibrated probabilities sit close to the base rate, so the ranking carries
+  the information and individual probabilities should not be read as precise.
+- **Country-level aggregation hides sub-national reality.** A country that scores
+  "stable" can contain an acute regional crisis. Admin-1 breakdown is planned.
+- **"Escalation" is one specific definition** — next-4-week fatalities exceeding
+  both 2× the trailing 12-week rate and 10 deaths. Other thresholds yield other
+  conclusions.
+- **Geographic coding choices matter.** Palestine covers Gaza Strip and West Bank
+  in both ACLED and the GDELT mapping (FIPS `WE` + `GZ`). The optional UCDP
+  fallback is coarser — it maps Gleditsch-Ward 666 to Palestine, which includes
+  Israel-side events — and is disabled unless a UCDP token is supplied.
+- **HMM states are inferred latent variables**, not authoritative conflict
+  classifications.
+
 ## Data attribution & licensing
 
 **No raw data is redistributed in this repository.** Rebuild it locally with the

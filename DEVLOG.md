@@ -1,5 +1,20 @@
 # DEVLOG
 
+## 2026-07-18 — Public-repo privacy & ethics audit
+
+- Scanned **every blob in the full git history** for credentials
+  (password, ACLED/UCDP tokens, JWTs, private keys, GH/AWS/Slack tokens):
+  **clean**. No `.env`, no token file, no data, no `.claude/` on the remote.
+- Found: **author email is embedded in all commits** (git identity) — public
+  via GitHub. Fixable with a GitHub `noreply` address + history rewrite;
+  pending owner decision.
+- Removed the macOS home path from DEVLOG (revealed local username).
+- Added README **"Limitations & responsible use"**: media-coverage bias
+  (underreported crises look calm), the 12-month violence lag, modest skill,
+  country-level aggregation hiding sub-national crises, the specific
+  escalation definition, Palestine/Israel geographic coding, and an explicit
+  "not an operational early-warning system" statement.
+
 ## 2026-07-18 — ACLED attribution compliance (repo is public)
 
 - Checked ACLED's actual Attribution Policy — it requires more than a README
@@ -21,7 +36,7 @@
 
 - Repo: https://github.com/lmcnulty7/Escalating-States-Markov-Chain
 - **Made this a standalone git repo.** The directory was previously owned by
-  the home-directory repo (`/Users/lucienmcnulty`) — committing from there
+  the home-directory repo (`~`) — committing from there
   would have pushed the entire home folder (SSH keys, .claude.json, etc.).
   Same pattern as NBA Comp Viz V3.
 - Excluded and verified absent from the remote: `.env` (ACLED password),
