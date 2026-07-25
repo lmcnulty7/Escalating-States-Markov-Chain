@@ -1,0 +1,24 @@
+# Credentials — never commit
+.env
+.acled_token.json
+
+# Local agent config + worktrees (contains copies of unrelated projects)
+.claude/
+
+# Regenerable artifacts.
+# data/ is excluded for size (41 MB GDELT archive) AND licensing: ACLED's
+# terms do not permit redistributing raw event records. Rebuild locally with
+#   python -c "from src.gdelt_files import build_archive; build_archive()"
+#   python run_pipeline.py
+data/
+models/
+
+# Python
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.venv/
+venv/
+
+# OS
+.DS_Store
